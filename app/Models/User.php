@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Area;
+use App\Models\Department;
 use App\Traits\Followable;
+use App\Models\DepartmentUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,15 +20,18 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'username',
-        'name',
-        'email',
-        'password',
-        'avatar',
-        'bio',
-        'banner'
-    ];
+    // protected $fillable = [
+    //     'firstname',
+    //     'lastname',
+    //     'email',
+    //     'password',
+    //     'faculty',
+    //     'department',
+    //     'avatar',
+    //     'bio',
+    //      'department_id'
+    // ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -46,42 +52,56 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function path($append = '')
+    {
+        $path = route('profile', $this);
+
+        return $append ? "$path/{$append}" : $path;
+    }
+
     public function getAvatarAttribute($value)
     {
         return asset($value ?: '/images/default-avatar.jpeg');
     }
 
-    public function getBannerAttribute($value)
+    public function getPublication_fileAttribute($value)
     {
-        return asset($value ?: '/images/bart_larue.png');
+        return asset($value);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function publications()
+    {
+        return $this->hasMany(Publication::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function areas()
+    {
+        return $this->belongsToMany(Area::class);
     }
 
     public function timeline()
     {
         $friends = $this->follows->pluck('id');
 
-        return Tweet::whereIn('user_id', $friends)
+        return Post::whereIn('user_id', $friends)
             ->orWhere('user_id', $this->id)
             ->withLikes()
             ->latest()
             ->paginate(50);
-    }
-
-    public function tweets()
-    {
-        return $this->hasMany(Tweet::class)
-            ->latest();
-    }
-
-    public function path($append = '')
-    {
-        $path = route('profile', $this->username);
-
-        return $append ? "$path/{$append}" : $path;
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
     }
 }

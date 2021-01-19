@@ -2,50 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\User;
+use App\Models\Faculty;
+use App\Models\Department;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Validation\Rule;
 class ProfileController extends Controller
 {
     public function show(User $user)
     {
-        return view('profiles.show', [
+        return view('profiles._profile', [
             'user' => $user,
-            'tweets' => $user->tweets()->withLikes()->paginate(30)
+            'users' => recommend_users()
         ]);
     }
-
+    
     public function edit(User $user)
     {
-        return view('profiles.edit', compact('user'));
+        return view('profiles.edit', [
+            'user' => $user,
+            'users' => recommend_users(),
+            'faculties' => Faculty::orderBy('name')->get(),
+            'departments' => Department::orderBy('name')->get(),
+            'areas' => Area::all()
+        ]);
     }
 
     public function update(User $user)
     {
         $attributes = request()->validate([
-            'name' => ['string', 'required', 'max:255'],
-            'username' => ['string', 'required', 'max:255', 'alpha_dash', Rule::unique('users')->ignore($user)],
+            'firstname' => ['string', 'required', 'max:255'],
+            'lastname' => ['string', 'required', 'max:255'],
             'bio' => ['string', 'nullable'],
+            'department_id' => ['string'],
             'avatar' => ['file'],
-            'banner' => ['file'],
-            'email' => ['string', 'required', 'email', 'max:255'],
-            'password' => ['string', 'required', 'min:8', 'max:255', 'confirmed'],
+            'email' => ['string', 'required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
         ]);
 
-        $attributes['password'] = Hash::make($attributes['password']);
+        if(request('password') !== null)
+        {
+            $attributes = request()->validate([
+                'password' => ['string', 'min:8', 'max:30', 'confirmed']
+            ]);
+            $attributes['password'] = Hash::make($attributes['password']);
+        }
 
         if(request('avatar')){
             $attributes['avatar'] = request('avatar')->store('avatars');
         }
 
-        if(request('banner')){
-            $attributes['banner'] = request('banner')->store('banners');
-        }
-
         $user->update($attributes);
 
-        return redirect($user->path()); 
+        if(request('area') !== null){
+            $user->areas()->attach(request('area'));
+        }
+
+        return redirect()->route('profile', $user);
+    }
+
+    public function posts(User $user)
+    {
+        return view('profiles.post', [
+            'user' => $user,
+            'users' => recommend_users(),
+            'posts' => $user->posts()->withLikes()->paginate(10)
+        ]);
     }
 }
