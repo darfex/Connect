@@ -9,6 +9,6 @@
         <h3 class="font-bold mt-4 mb-4">{{ $publication->title }}</h3>
         <p class="text-justify mb-3 p-2">{{ $publication->abstract }}</p>
         <embed src="{{ asset($publication->document) }}" type="" width="150px" class="mb-6">
-        <a href="/download/{{ $publication->id }}" class="bg-blue-500 text-white p-3 mt-2 rounded-md">Download File</a>
+        <a href="/download/{{ $publication->id }}" target="blank" class="bg-blue-500 text-white p-3 mt-2 rounded-md">Download File</a>
     </div>
 @endsection

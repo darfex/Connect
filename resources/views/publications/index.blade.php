@@ -9,7 +9,18 @@
             <ul class="px-4">
                 @forelse ($publications as $publication)
                 <li class="my-6 {{ $loop->last ? '' : 'border-b border-b-gray-400' }}">
-                    <a href="{{ route('publications', $user) }}/{{ $publication->id }}" class="text-lg font-semibold">{{ $publication->title }} </a>
+                    <div class="flex justify-between">
+                        <a href="{{ route('publications', $user) }}/{{ $publication->id }}" class="text-lg font-semibold">{{ $publication->title }} </a>
+
+                        @can('delete', $publication)
+                            <form action="/publications/{{ $publication->id }}/delete" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <x-delete-button/>
+                            </form>
+
+                        @endcan
+                    </div>
                     <p class="text-xs">{{ 'Published on ' . date('F d Y', strtotime($publication->created_at)) }}</p>
                 </li>
                     @empty

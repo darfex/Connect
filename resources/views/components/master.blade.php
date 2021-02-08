@@ -8,10 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Connect') }}</title>
+    <title>{{ config('app.name', 'UIRMS') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
 
     {{-- Chosen Plugin --}}
     <link rel="stylesheet" href="{{ asset('plugin/chosen.min.css') }}">
@@ -28,6 +29,44 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .chat {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    
+        .chat li {
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px dotted #B3A9A9;
+        }
+    
+        .chat li .chat-body p {
+            margin: 0;
+            color: #777777;
+        }
+    
+        .panel-body {
+            overflow-y: scroll;
+            height: 350px;
+        }
+    
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: #F5F5F5;
+        }
+    
+        ::-webkit-scrollbar {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+    
+        ::-webkit-scrollbar-thumb {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+            background-color: #555;
+        }
+    </style>
 </head>
 
 <body class="">
@@ -39,9 +78,9 @@
                 <div>
                     <h1 class="text-2xl">
                         @auth
-                            <a href="/home">Connect</a>
+                            <a href="/home">UIRMS</a>
                         @else
-                            <a href="/">Connect</a>
+                            <a href="/">UIRMS</a>
                         @endauth
                     </h1>
                 </div>
@@ -68,7 +107,7 @@
                         </li>
                         @else
                         <li class="pr-5" id="navlink"><a href="{{ route('login') }}">Login</a></li>
-                        <li class="pr-5"><a href="/signup">Register</a></li>
+                        <li class="pr-5"><a href="{{ route('register') }}">Register</a></li>
                     @endauth
                     {{-- @endif --}}
                 </ul>
@@ -81,11 +120,11 @@
     <script src="{{ asset('js/main.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#area').select2();
+            $('select').chosen();
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function(){
             $(" #faculty").change(function(){
                 var faculty_id = $(this).val();
@@ -105,6 +144,6 @@
                 });
             });
         });
-    </script>
+    </script> --}}
 </body>
 </html>

@@ -19,4 +19,9 @@ class PublicationPolicy
     {
         return $publication->user->is($user);
     }
+
+    public function delete(User $user, Publication $publication)
+    {
+        return $publication->user->is($user);
+    }
 }

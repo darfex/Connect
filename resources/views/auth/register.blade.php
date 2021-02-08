@@ -10,7 +10,7 @@
                     value="{{ old('lastname') }}" required>
 
                 @error('lastname')
-                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -20,7 +20,7 @@
                     value="{{ old('firstname') }}" required>
 
                 @error('firstname')
-                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -30,7 +30,7 @@
                     value="{{ old('email') }}" required>
 
                 @error('email')
-                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -45,8 +45,19 @@
                 </select>
             
                 @error('department_id')
-                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                 @enderror
+            </div>
+
+            <div class="mb-6">
+                <label class="uppercase font-bold text-sm text-gray-700 block mb-1" for="category">Category</label>
+                <div class="text-sm text-gray-600">
+                    <span>Lecturer</span>
+                    <input class="mr-3" type="radio" name="category" id="category" value="lecturer" required>
+
+                    <span>Student</span>
+                    <input class="" type="radio" name="category" id="category" value="student" required>
+                </div>
             </div>
 
             <div class="mb-6">
@@ -54,7 +65,7 @@
                 <input class="border border-gray-400 p-2 w-full" type="password" name="password" id="password" required>
 
                 @error('password')
-                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                 @enderror
             </div>
 

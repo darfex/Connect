@@ -29,9 +29,9 @@
         </div>
 
         <div class="mb-6">
-            <label class="block mb-2 uppercase font-bold text-sm text-gray-700" for="bio">Bio</label>
-            <textarea name="bio" id="bio"
-                class="w-full border-2 rounded-md {{ $errors->has('bio') ? 'border-red-600' : 'border-gray-400' }}">{{ $user->bio }}</textarea>
+            <label class="block mb-2 uppercase font-bold text-sm text-gray-700" for="description">Description</label>
+            <textarea name="description" id="description"
+                class="w-full border-2 rounded-md {{ $errors->has('description') ? 'border-red-600' : 'border-gray-400' }}">{{ $user->description }}</textarea>
 
             @error('bio')
             <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
@@ -84,7 +84,7 @@
         
             <select 
                 name="area[]" 
-                id="area" 
+                id="area[]" 
                 class="border-2 border-gray-400 rounded-md w-full p-2 area"
                 multiple="multiple"
                 size="1"
@@ -100,7 +100,7 @@
         </div>
 
         <div class="mb-6">
-            <label for="avatar" class="block mb-2 uppercase font-bold text-sm text-gray-700">Avatar</label>
+            <label for="avatar" class="block mb-2 uppercase font-bold text-sm text-gray-700">Profile Picture</label>
 
             <div class="flex">
                 <input type="file" class="{{ $errors->has('avatar') ? 'border-red-600' : 'border-gray-400'}}"
@@ -151,10 +151,4 @@
 
     </form>
 </div>
-<script>
-    $(document).ready(function() {
-        $('.area').select2();
-    });
-</script>
-
 @endsection

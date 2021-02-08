@@ -17,8 +17,7 @@ class ExploreController extends Controller
         $friends->push(auth()->user()->id);
 
         return view('explore', [
-            'people' => User::whereNotIn('id', $friends)->orderBy('lastname')->paginate(15),
-            'users' => recommend_users()
+            'people' => User::whereNotIn('id', $friends)->orderBy('lastname')->paginate(10),
         ]);
     }
 }

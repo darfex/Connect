@@ -9,19 +9,17 @@ class FollowController extends Controller
 {
     public function followings(User $user)
     {
-        return view('profiles.following', [
+        return view('profiles.follow', [
             'user' => $user,
-            'followings' => $user->follows()->paginate(15),
-            'users' => recommend_users()
+            'data' => $user->follows()->paginate(15),
         ]);
     }
 
     public function followers(User $user)
     {
-        return view('profiles.followers',[
+        return view('profiles.follow',[
             'user' => $user,
-            'followers' => $user->followers()->paginate(15),
-            'users' => recommend_users()
+            'data' => $user->followers()->paginate(15),
         ]);
     }
 
@@ -35,5 +33,12 @@ class FollowController extends Controller
         }
         return back()
             ->with('message', "You have unfollowed @$user->username");
+    }
+
+    public function connections(User $user)
+    {
+        $connections = $user->follows;
+        $connections->push($user->followers)->collapse();
+    
     }
 }

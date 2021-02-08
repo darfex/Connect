@@ -3,7 +3,7 @@
 @section('content')
 <div class="mt-20 border border-gray-200 rounded-lg p-4">
     <ul>
-        @forelse ($followings as $following)
+        @forelse ($data as $following)
         <li class="{{ $loop->last ? '' : 'mb-4' }} text-sm">
             <div>
                 <a href="{{ route('profile', $user) }}" class="flex items-center text-sm">
@@ -16,7 +16,7 @@
         <li class="text-sm">No friends yet!</li>
         @endforelse
 
-        {{ $followings->links() }}
+        {{ $data->links() }}
     </ul>
 </div>
 @endsection

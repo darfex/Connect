@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Area;
+use App\Models\Message;
 use App\Models\Department;
 use App\Traits\Followable;
 use App\Models\DepartmentUser;
@@ -92,6 +93,11 @@ class User extends Authenticatable
     public function areas()
     {
         return $this->belongsToMany(Area::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 
     public function timeline()

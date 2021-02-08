@@ -12,13 +12,14 @@
 <x-follow-button :user="$user"></x-follow-button>
 
 <p class="">
-    {{ $user->bio }}
+    {{ $user->description }}
 </p>
 
 <div class="mt-4 shadow-md p-4 border border-gray-200 rounded-lg text-gray-800 mb-10">
     <div class="mb-6">
         <h1 class="">About</h1>
         <hr class="mb-4">
+        <p class="text-gray-500 mb-3">{{ 'Category: ' . ucfirst($user->category) }}</p>
         <p class="text-gray-500 mb-3">{{ 'Faculty: ' . $user->department->faculty->name }}</p>
         <p class="text-gray-500 mb-3">{{ 'Department: ' .  $user->department->name }}</p>
         <div class="mb-3">
@@ -38,7 +39,7 @@
         <h1>Contact</h1>
         <hr class="mb-4">
 
-        <p class="text-gray-500 mb-3">{{ 'Email: ' . $user->email }}</p>
+        <a class="text-gray-500 mb-3" href="mailto:{{ $user->email }}">{{ 'Email: ' . $user->email }}</a>
     </div>
 </div>
 @endsection
