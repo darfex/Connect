@@ -15,7 +15,6 @@ class ProfileController extends Controller
     {
         return view('profiles._profile', [
             'user' => $user,
-            'users' => recommend_users()
         ]);
     }
     
@@ -23,7 +22,6 @@ class ProfileController extends Controller
     {
         return view('profiles.edit', [
             'user' => $user,
-            'users' => recommend_users(),
             'faculties' => Faculty::orderBy('name')->get(),
             'departments' => Department::orderBy('name')->get(),
             'areas' => Area::all()
@@ -35,7 +33,7 @@ class ProfileController extends Controller
         $attributes = request()->validate([
             'firstname' => ['string', 'required', 'max:255'],
             'lastname' => ['string', 'required', 'max:255'],
-            'bio' => ['string', 'nullable'],
+            'description' => ['string', 'nullable'],
             'department_id' => ['string'],
             'avatar' => ['file'],
             'email' => ['string', 'required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
@@ -60,14 +58,5 @@ class ProfileController extends Controller
         }
 
         return redirect()->route('profile', $user);
-    }
-
-    public function posts(User $user)
-    {
-        return view('profiles.post', [
-            'user' => $user,
-            'users' => recommend_users(),
-            'posts' => $user->posts()->withLikes()->paginate(10)
-        ]);
     }
 }

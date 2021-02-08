@@ -20,7 +20,13 @@
                 </div>
                 <div class="flex items-center mt-3">
                     <x-like-button :post="$post" />
-                    <x-delete-button :post="$post" />
+                    @can('delete', $post)
+                        <form action="/posts/{{ $post->id }}/delete" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <x-delete-button/>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>

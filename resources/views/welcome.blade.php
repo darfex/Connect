@@ -4,8 +4,8 @@
             <img src="{{ asset('/images/header.png') }}" alt="" class="w-3/5">
 
             <div>
-                <h1 class="text-3xl text-center mb-3">Connect <br> And <br> Collaborate <br> With Your Peers</h1>
-                <a href="/signup">
+                <h1 class="text-3xl text-center mb-3">UI<br>Research<br>Management System</h1>
+                <a href="{{ route('register') }}">
                     <button class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-32 rounded-lg">Join</button>
                 </a>
             </div>
@@ -27,8 +27,8 @@
 
             <div>
                 <h1>
-                    <h1 class="text-3xl text-center mb-3">Measure Your Impact</h1>
-                    <p class="text-center">View who's been reading your work and keep track of your publications</p>
+                    <h1 class="text-3xl text-center mb-3">Collaborate with Your Peers</h1>
+                    <p class="text-center">Connect with other researchers in your field</p>
                 </h1>
             </div>
         </div>

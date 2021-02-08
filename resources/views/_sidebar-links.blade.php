@@ -12,21 +12,17 @@
             <a href="{{ route('profile', $user) }}/posts"
                 class="font-bold text-lg mb-4 block {{ Request::path() === '/' ? 'current_page_item' : ''}}">Posts</a>
         </li>
-        <li>
+        {{-- <li>
             <a href="{{ route('profile', $user) }}/followers"
                 class="font-bold text-lg mb-4 block {{ Request::path() === '/' ? 'current_page_item' : ''}}">Followers</a>
-        </li>
+        </li> --}}
         <li>
             <a href="{{ route('profile', $user) }}/followings"
-                class="font-bold text-lg mb-4 block {{ Request::path() === '/' ? 'current_page_item' : ''}}">Following</a>
+                class="font-bold text-lg mb-4 block {{ Request::path() === '/' ? 'current_page_item' : ''}}">Connections</a>
         </li>
         <li>
-            <a href="/notifications"
+            <a href="/notifications/"
                 class="font-bold text-lg mb-4 block {{ Request::path() === '/' ? 'current_page_item' : ''}}">Notifications</a>
-        </li>
-        <li>
-            <a href="/stats"
-                class="font-bold text-lg mb-4 block {{ Request::path() === '/' ? 'current_page_item' : ''}}">Stats</a>
         </li>
     </ul>
 </div>

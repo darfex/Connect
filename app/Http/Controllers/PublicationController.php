@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Publication;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Storage;
-
+use App\Notifications\NewPublication;
+use Illuminate\Support\Facades\Notification;
+use App\Http\Requests\CreatePublicationRequest;
 class PublicationController extends Controller
 {
     public function index(User $user)
     {
         return view('publications.index', [
             'user' => $user,
-            'users' => recommend_users(),
             'publications' => $user->publications()->paginate(10)
         ]);
     }
@@ -23,7 +23,6 @@ class PublicationController extends Controller
         return view('publications.show', [
             'user' => $user,
             'publication' => $publication,
-            'users' => recommend_users()
         ]);
     }
 
@@ -31,23 +30,17 @@ class PublicationController extends Controller
     {
         return view('publications.create', [
             'user' => auth()->user(),
-            'users' => recommend_users()
         ]);
     }
 
-    public function store()
+    public function store(CreatePublicationRequest $request)
     {
-        $attributes = request()->validate([
-            'title' => ['string', 'required', 'max:255'],
-            'abstract' => ['string', 'required', 'min:300'],
-            'document' => ['file', 'required']
-        ]);
-
+        $attributes = $request->all();
         $attributes['document'] = request('document')->store('publications');
-        $attributes['user_id'] = auth()->id();
+        $attributes['user_id'] = $request->user()->id;
         
         Publication::create($attributes);
-
+    
         return back()
             ->with('message', 'Your publication has been published');
     }
@@ -57,7 +50,6 @@ class PublicationController extends Controller
         return view('publications.edit', [
             'user' => auth()->user(),
             'publication' => $publication,
-            'users' => recommend_users()
         ]);
     }
 
@@ -76,5 +68,13 @@ class PublicationController extends Controller
        $publication->update($attributes);
 
         return redirect(route('publications', auth()->user()) . "/$publication->id");
+    }
+
+    public function destroy(Publication $publication)
+    {
+        $publication->delete();
+
+        return back()
+            ->with('message', 'Publication deleted');
     }
 }

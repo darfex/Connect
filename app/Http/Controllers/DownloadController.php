@@ -16,12 +16,4 @@ class DownloadController extends Controller
         return Storage::download($file);
         return back();
     }
-
-    public function show()
-    {
-        return view('notifications.index',[
-            'user' => auth()->user(),
-            'users' => recommend_users()
-        ]);
-    }
 }

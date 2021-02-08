@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 class UserNotificationsController extends Controller
 {
-    public function show()
+    public function index()
     {
         return view('notifications.index',[
             'user' => auth()->user(),
-            'users' => recommend_users()
+            'notifications' => tap(auth()->user()->unreadNotifications)->markAsRead()
         ]);
     }
 }

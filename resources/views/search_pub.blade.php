@@ -1,4 +1,4 @@
-<x-app :users="$users">
+<x-app>
     <div class="mx-auto">
         <div class="border-gray-300 border rounded mt-10 p-4">
             <h1 class="text-lg font-bold mb-2">Search Result</h1>

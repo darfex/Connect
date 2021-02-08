@@ -24,7 +24,6 @@ class SearchController extends Controller
 
             return view('search_user', [
                 'data' => $data,
-                'users' => recommend_users()
             ]);
         }
         elseif(request('by') === 'publication')
@@ -35,7 +34,6 @@ class SearchController extends Controller
 
             return view('search_pub', [
                 'data' => $data,
-                'users' => recommend_users()
             ]);
         }
 
