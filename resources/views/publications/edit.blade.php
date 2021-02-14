@@ -33,7 +33,7 @@
 
         <div class="mb-6">
             <label class="block mb-2 uppercase font-bold text-xs text-gray-700" for="publication_file">Document</label>
-            <p class="text-xs text-red-500">Upload new file</p>
+            <p class="text-xs text-green-600">Upload new file</p>
             <input class="border border-gray-400 p-2 w-full" type="file" name="document" id="document"
                 value="">
 

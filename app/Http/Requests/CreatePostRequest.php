@@ -25,17 +25,7 @@ class CreatePostRequest extends FormRequest
     {
         return [
             'body' => 'required|max:280',
-            'image' => 'file|mimes:png,jpg,jpeg'
-        ];
-    }
-
-    public function message()
-    {
-        return [
-            'body.required' => 'The post body is required',
-            'body.max:280' => 'The post body cannot be more than 280 characters',
-            'image.file' => 'The image must be a file',
-            'image.mimes' => 'The image must be a png, jpg, or jpeg file'
+            'image' => 'file|nullable|mimes:png,jpg,jpeg'
         ];
     }
 }

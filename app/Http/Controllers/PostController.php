@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\CreatePostRequest;
 
 class PostController extends Controller
@@ -27,11 +26,11 @@ class PostController extends Controller
 
     public function store(CreatePostRequest $request)
     {
-        $request['image'] != null ? $image = $request['image']->store('posts') : $image = null;
+        $request->image !== null ? $image = $request->image->store('posts') : $image = null;
 
         Post::create([
-            'user_id' => $request->user(),
-            'body' => $request['body'],
+            'user_id' => $request->user()->id,
+            'body' => $request->body,
             'image' => $image
         ]);
 

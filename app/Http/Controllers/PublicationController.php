@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Publication;
-use Illuminate\Http\Request;
-use App\Notifications\NewPublication;
-use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\CreatePublicationRequest;
+use App\Http\Requests\UpdatePublicationRequest;
+
 class PublicationController extends Controller
 {
     public function index(User $user)
@@ -36,36 +35,32 @@ class PublicationController extends Controller
     public function store(CreatePublicationRequest $request)
     {
         $attributes = $request->all();
-        $attributes['document'] = request('document')->store('publications');
+        $attributes['document'] = $request->document->store('publications');
         $attributes['user_id'] = $request->user()->id;
         
         Publication::create($attributes);
     
-        return back()
-            ->with('message', 'Your publication has been published');
+        return redirect()->action([PublicationController::class, 'index'], ['user' => $request->user()]);
     }
 
     public function edit(User $user, Publication $publication)
     {
         return view('publications.edit', [
-            'user' => auth()->user(),
+            'user' => $user,
             'publication' => $publication,
         ]);
     }
 
-    public function update(Publication $publication)
+    public function update(UpdatePublicationRequest $request, $id)
     {
-        $attributes = request()->validate([
-            'title' => ['string', 'required', 'max:255'],
-            'abstract' => ['string', 'required', 'min:300'],
-            'document' => ['file', 'nullable']
-        ]);
+        $attributes = $request->all();
 
-        if(request('document')){
-            $attributes['document'] = request('document')->store('publications');
+        if($request->has('document')){
+            $attributes['document'] = $request->document->store('publications');
         }
 
-       $publication->update($attributes);
+        $publication = Publication::find($id);
+        $publication->update($attributes);
 
         return redirect(route('publications', auth()->user()) . "/$publication->id");
     }
@@ -73,7 +68,6 @@ class PublicationController extends Controller
     public function destroy(Publication $publication)
     {
         $publication->delete();
-
         return back()
             ->with('message', 'Publication deleted');
     }

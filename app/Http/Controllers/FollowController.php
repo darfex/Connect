@@ -29,10 +29,10 @@ class FollowController extends Controller
 
         if(auth()->user()->following($user)){
             return back()
-                ->with('message', "You have followed @$user->username");
+                ->with('message', "You have followed $user->lastname $user->firstname");
         }
         return back()
-            ->with('message', "You have unfollowed @$user->username");
+            ->with('message', "You have unfollowed $user->firstname $user->lastname");
     }
 
     public function connections(User $user)

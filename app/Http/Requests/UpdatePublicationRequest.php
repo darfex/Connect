@@ -26,7 +26,7 @@ class UpdatePublicationRequest extends FormRequest
         return [
             'title' => 'string|required|max:255',
             'abstract' => 'string|required|min:300',
-            'document' => 'nullable|file'
+            'document' => 'nullable|file|mimes:pdf'
         ];
     }
 }

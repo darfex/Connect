@@ -14,7 +14,7 @@ class SearchController extends Controller
             'search' => ['string']
         ]);
 
-        $query = request('search');
+        $query = $request->search;
 
         if(request('by') === 'user')
         {

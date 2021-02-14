@@ -1,10 +1,11 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 function recommend_users()
 {
-    $user_department = auth()->user()->department->id;
+    $user_department = Auth::user()->department->id;
 
     $friends = auth()->user()->follows->pluck('id');
 
