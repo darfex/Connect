@@ -32,7 +32,7 @@ class ProfileController extends Controller
 
     public function update(User $user)
     {
-        $attributes = $this->validator();
+        $attributes = $this->validated();
 
         if(request('password') !== null)
         {
@@ -55,7 +55,7 @@ class ProfileController extends Controller
         return redirect()->route('profile', $user);
     }
 
-    private function validator()
+    private function validated()
     {
         return request()->validate([
             'firstname' => ['string', 'required', 'max:255'],
